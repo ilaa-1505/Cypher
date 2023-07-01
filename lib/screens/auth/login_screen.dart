@@ -144,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
             top: mq.height * .15,
             right: _isAnimate ? mq.width * .25 : -mq.width * .5,
             width: mq.width * .5,
-            duration: const Duration(seconds: 1),
+            duration: const Duration(seconds: 0),
             child: Image.asset('images/icon.png'),
           ),
           Positioned(
@@ -159,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 elevation: 1,
               ),
               onPressed: _showPhoneNumberPopup,
-              icon: const Icon(Icons.phone,color: Colors.black,),
+              icon: const Icon(Icons.phone),
               label: RichText(
                 text: const TextSpan(
                   style: TextStyle(color: Colors.black, fontSize: 16),
