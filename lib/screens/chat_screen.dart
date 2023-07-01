@@ -6,7 +6,7 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import '../api/apis.dart';
 import '../helper/my_date_util.dart';
 import '../main.dart';
@@ -92,9 +92,11 @@ class _ChatScreenState extends State<ChatScreen> {
                                   return MessageCard(message: _list[index]);
                                 });
                           } else {
-                            return const Center(
-                              child: Text('Namaste 🙏🙏',
-                                  style: TextStyle(fontSize: 20)),
+                            return Center(
+                              child: Text(
+                                'Namaste 🙏🙏',
+                                style: GoogleFonts.poppins(fontSize: 15),
+                              ),
                             );
                           }
                       }
@@ -241,9 +243,10 @@ class _ChatScreenState extends State<ChatScreen> {
                     onTap: () {
                       if (_showEmoji) setState(() => _showEmoji = !_showEmoji);
                     },
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                         hintText: 'Type Something...',
-                        hintStyle: TextStyle(color: Colors.blueAccent),
+                        hintStyle: GoogleFonts.poppins(
+                            color: Colors.blueAccent, fontSize: 15),
                         border: InputBorder.none),
                   )),
 

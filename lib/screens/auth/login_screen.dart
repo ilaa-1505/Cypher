@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Phone Number Login'),
+          title: Text('Phone Number Login', style: GoogleFonts.poppins()),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -114,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: const Text('Send OTP'),
+              child: Text('Send OTP', style: GoogleFonts.poppins()),
             ),
             ElevatedButton(
               onPressed: _loginWithOtp,
@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: const Text('Login'),
+              child: Text('Login', style: GoogleFonts.poppins()),
             ),
           ],
         );
@@ -133,48 +133,57 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('Welcome to Cypher'),
-      ),
-      body: Stack(
-        children: [
-          AnimatedPositioned(
-            top: mq.height * .15,
-            right: _isAnimate ? mq.width * .25 : -mq.width * .5,
-            width: mq.width * .5,
-            duration: const Duration(seconds: 0),
-            child: Image.asset('images/icon.png'),
-          ),
-          Positioned(
-            bottom: mq.height * .15,
-            left: mq.width * .05,
-            width: mq.width * .9,
-            height: mq.height * .06,
-            child: ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 223, 255, 187),
-                shape: const StadiumBorder(),
-                elevation: 1,
-              ),
-              onPressed: _showPhoneNumberPopup,
-              icon: const Icon(Icons.phone,color: Colors.black,),
-              label: RichText(
-                text: const TextSpan(
-                  style: TextStyle(color: Colors.black, fontSize: 16),
-                  children: [
-                    TextSpan(text: 'Login with '),
-                    TextSpan(
-                      text: 'Phone Number',
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                  ],
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 156, 202, 239),
+          automaticallyImplyLeading: false,
+          title: Text('Welcome to Cypher', style: GoogleFonts.poppins()),
+        ),
+        body: Stack(
+          children: [
+            AnimatedPositioned(
+              top: mq.height * .15,
+              right: _isAnimate ? mq.width * .25 : -mq.width * .5,
+              width: mq.width * .5,
+              duration: const Duration(seconds: 0),
+              child: Image.asset('images/icon.png'),
+            ),
+            Positioned(
+              bottom: mq.height * .15,
+              left: mq.width * .05,
+              width: mq.width * .9,
+              height: mq.height * .06,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 156, 202, 239),
+                  shape: const StadiumBorder(),
+                  elevation: 1,
+                ),
+                onPressed: _showPhoneNumberPopup,
+                icon: const Icon(
+                  Icons.phone,
+                  color: Colors.black,
+                ),
+                label: RichText(
+                  text: TextSpan(
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                    children: [
+                      TextSpan(
+                          text: 'Login with ', style: GoogleFonts.poppins()),
+                      TextSpan(
+                        text: 'Phone Number',
+                        style: GoogleFonts.poppins(
+                            textStyle: TextStyle(fontWeight: FontWeight.w500)),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../api/apis.dart';
 import '../helper/dialogs.dart';
@@ -77,7 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
             title: _isSearching
                 ? TextField(
                     decoration: const InputDecoration(
-                        border: InputBorder.none, hintText: 'Name, Email, ...'),
+                        border: InputBorder.none,
+                        hintText: 'Name, Phone number ...'),
                     autofocus: true,
                     style: const TextStyle(fontSize: 17, letterSpacing: 0.5),
                     //when search text changes then updated search list
@@ -96,7 +98,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     },
                   )
-                : const Text('Cypher'),
+                : Text(
+                    'Cypher',
+                    style: GoogleFonts.poppins(),
+                  ),
             actions: [
               //search user button
               IconButton(
