@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../api/apis.dart';
-//import '../helper/my_date_util.dart';
+import '../helper/my_date_util.dart';
 import '../main.dart';
 import '../models/chat_user.dart';
 import '../models/message.dart';
@@ -58,7 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
               flexibleSpace: _appBar(),
             ),
 
-            backgroundColor: const Color.fromARGB(255,228, 241, 254),
+            backgroundColor: const Color.fromARGB(255, 228, 241, 254),
 
             //body
             body: Column(
@@ -191,18 +191,18 @@ class _ChatScreenState extends State<ChatScreen> {
                       const SizedBox(height: 2),
 
                       //last seen time of user
-                      // Text(
-                      //     list.isNotEmpty
-                      //         ? list[0].isOnline
-                      //             ? 'Online'
-                      //             : MyDateUtil.getLastActiveTime(
-                      //                 context: context,
-                      //                 lastActive: list[0].lastActive)
-                      //         : MyDateUtil.getLastActiveTime(
-                      //             context: context,
-                      //             lastActive: widget.user.lastActive),
-                      //     style: const TextStyle(
-                      //         fontSize: 13, color: Colors.black54)),
+                      Text(
+                          list.isNotEmpty
+                              ? list[0].isOnline
+                                  ? 'Online'
+                                  : MyDateUtil.getLastActiveTime(
+                                      context: context,
+                                      lastActive: list[0].lastActive)
+                              : MyDateUtil.getLastActiveTime(
+                                  context: context,
+                                  lastActive: widget.user.lastActive),
+                          style: const TextStyle(
+                              fontSize: 13, color: Colors.black54)),
                     ],
                   )
                 ],
