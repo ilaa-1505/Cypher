@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     },
                   )
-                : const Text('We Chat'),
+                : const Text('Cypher'),
             actions: [
               //search user button
               IconButton(
@@ -226,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
               //content
               content: TextFormField(
                 maxLines: null,
-                onChanged: (value) => phoneNumber ="+91$value",
+                onChanged: (value) => phoneNumber = "+91$value",
                 decoration: InputDecoration(
                     hintText: 'phone number',
                     prefixIcon: const Icon(Icons.phone, color: Colors.blue),
