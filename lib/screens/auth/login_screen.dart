@@ -159,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 elevation: 1,
               ),
               onPressed: _showPhoneNumberPopup,
-              icon: const Icon(Icons.phone),
+              icon: const Icon(Icons.phone,color: Colors.black,),
               label: RichText(
                 text: const TextSpan(
                   style: TextStyle(color: Colors.black, fontSize: 16),
