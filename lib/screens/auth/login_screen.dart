@@ -70,9 +70,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
       await FirebaseAuth.instance.signInWithCredential(credential);
       log('OTP Login Success');
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => const HomeScreen()));
     } catch (e) {
       log('Failed to Sign In with OTP: $e');
     }
@@ -137,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Welcome to We Chat'),
+        title: const Text('Welcome to Cypher'),
       ),
       body: Stack(
         children: [
@@ -160,9 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 elevation: 1,
               ),
               onPressed: _showPhoneNumberPopup,
-              icon: const Icon(Icons.phone,
-                  color: Color.fromARGB(255, 0, 0, 0) 
-              ),
+              icon: const Icon(Icons.phone),
               label: RichText(
                 text: const TextSpan(
                   style: TextStyle(color: Colors.black, fontSize: 16),
