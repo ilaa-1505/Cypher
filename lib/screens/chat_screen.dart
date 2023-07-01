@@ -58,7 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
               flexibleSpace: _appBar(),
             ),
 
-            backgroundColor: const Color.fromARGB(255, 234, 248, 255),
+            backgroundColor: const Color.fromARGB(255,228, 241, 254),
 
             //body
             body: Column(
@@ -93,7 +93,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 });
                           } else {
                             return const Center(
-                              child: Text('Say Hii! 👋',
+                              child: Text('Namaste 🙏🙏',
                                   style: TextStyle(fontSize: 20)),
                             );
                           }

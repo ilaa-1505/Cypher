@@ -11,6 +11,9 @@ import '../helper/my_date_util.dart';
 import '../main.dart';
 import '../models/message.dart';
 
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 // for showing single message details
 class MessageCard extends StatefulWidget {
   const MessageCard({super.key, required this.message});
@@ -38,7 +41,6 @@ class _MessageCardState extends State<MessageCard> {
     if (widget.message.read.isEmpty) {
       APIs.updateMessageReadStatus(widget.message);
     }
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -61,10 +63,20 @@ class _MessageCardState extends State<MessageCard> {
             child: widget.message.type == Type.text
                 ?
                 //show text
-                Text(
-                    widget.message.msg,
-                    style: const TextStyle(fontSize: 15, color: Colors.black87),
-                  )
+
+
+            Linkify(
+            onOpen: (link) async {
+              if (!await launchUrl(Uri.parse(link.url))) {
+                throw Exception('Could not launch ${link.url}');
+              }
+            },
+            text: widget.message.msg,
+            style: const TextStyle(fontSize: 15, color: Colors.black87),
+            linkStyle: const TextStyle(color: Colors.red),
+          )
+
+
                 :
                 //show image
                 ClipRRect(
