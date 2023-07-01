@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+// import '../../api/apis.dart';
 import '../../main.dart';
 import '../home_screen.dart';
 
@@ -69,8 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
       await FirebaseAuth.instance.signInWithCredential(credential);
       log('OTP Login Success');
-      context;
-      MaterialPageRoute(builder: (_) => const HomeScreen());
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+
     } catch (e) {
       log('Failed to Sign In with OTP: $e');
     }
@@ -91,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   labelText: 'Phone Number',
                 ),
                 onChanged: (value) {
-                  _phoneNumber = value;
+                  _phoneNumber = "+91$value";
                 },
               ),
               TextField(
@@ -108,10 +110,20 @@ class _LoginScreenState extends State<LoginScreen> {
           actions: [
             ElevatedButton(
               onPressed: _sendOtp,
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
               child: const Text('Send OTP'),
             ),
             ElevatedButton(
               onPressed: _loginWithOtp,
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
               child: const Text('Login'),
             ),
           ],
