@@ -25,7 +25,7 @@ class APIs {
   static ChatUser me = ChatUser(
       id: user.uid,
       name: user.displayName.toString(),
-      email: user.email.toString(),
+      phoneNumber: user.phoneNumber.toString(),
       about: "Hey, I'm using We Chat!",
       image: user.photoURL.toString(),
       createdAt: '',
@@ -38,6 +38,7 @@ class APIs {
 
   // for accessing firebase messaging (Push Notification)
   static FirebaseMessaging fMessaging = FirebaseMessaging.instance;
+
 
   // for getting firebase messaging token
   static Future<void> getFirebaseMessagingToken() async {
@@ -97,10 +98,10 @@ class APIs {
   }
 
   // for adding an chat user for our conversation
-  static Future<bool> addChatUser(String email) async {
+  static Future<bool> addChatUser(String phoneNumber) async {
     final data = await firestore
         .collection('users')
-        .where('email', isEqualTo: email)
+        .where('phoneNumber', isEqualTo: phoneNumber)
         .get();
 
     log('data: ${data.docs}');
@@ -148,7 +149,7 @@ class APIs {
     final chatUser = ChatUser(
         id: user.uid,
         name: user.displayName.toString(),
-        email: user.email.toString(),
+        phoneNumber: user.phoneNumber.toString(),
         about: "Hey, I'm using We Chat!",
         image: user.photoURL.toString(),
         createdAt: time,

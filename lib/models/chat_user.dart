@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 class ChatUser {
   ChatUser({
     required this.image,
@@ -7,7 +9,7 @@ class ChatUser {
     required this.isOnline,
     required this.id,
     required this.lastActive,
-    required this.email,
+    required this.phoneNumber,
     required this.pushToken,
   });
   late String image;
@@ -17,7 +19,7 @@ class ChatUser {
   late bool isOnline;
   late String id;
   late String lastActive;
-  late String email;
+  late String phoneNumber;
   late String pushToken;
 
   ChatUser.fromJson(Map<String, dynamic> json) {
@@ -28,7 +30,7 @@ class ChatUser {
     isOnline = json['is_online'] ?? '';
     id = json['id'] ?? '';
     lastActive = json['last_active'] ?? '';
-    email = json['email'] ?? '';
+    phoneNumber = json['phoneNumber'] ?? '';
     pushToken = json['push_token'] ?? '';
   }
 
@@ -41,7 +43,7 @@ class ChatUser {
     data['is_online'] = isOnline;
     data['id'] = id;
     data['last_active'] = lastActive;
-    data['email'] = email;
+    data['phoneNumber'] = phoneNumber;
     data['push_token'] = pushToken;
     return data;
   }

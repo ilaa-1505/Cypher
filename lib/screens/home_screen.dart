@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       for (var i in _list) {
                         if (i.name.toLowerCase().contains(val.toLowerCase()) ||
-                            i.email.toLowerCase().contains(val.toLowerCase())) {
+                            i.phoneNumber.contains(val.toLowerCase())) {
                           _searchList.add(i);
                           setState(() {
                             _searchList;
@@ -200,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // for adding new chat user
   void _addChatUserDialog() {
-    String email = '';
+    String phoneNumber = '';
 
     showDialog(
         context: context,
@@ -212,8 +212,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(20)),
 
               //title
-              title: Row(
-                children: const [
+              title: const Row(
+                children: [
                   Icon(
                     Icons.person_add,
                     color: Colors.blue,
@@ -226,10 +226,10 @@ class _HomeScreenState extends State<HomeScreen> {
               //content
               content: TextFormField(
                 maxLines: null,
-                onChanged: (value) => email = value,
+                onChanged: (value) => phoneNumber ="+91$value",
                 decoration: InputDecoration(
-                    hintText: 'Email Id',
-                    prefixIcon: const Icon(Icons.email, color: Colors.blue),
+                    hintText: 'phone number',
+                    prefixIcon: const Icon(Icons.phone, color: Colors.blue),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15))),
               ),
@@ -250,8 +250,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () async {
                       //hide alert dialog
                       Navigator.pop(context);
-                      if (email.isNotEmpty) {
-                        await APIs.addChatUser(email).then((value) {
+                      if (phoneNumber.isNotEmpty) {
+                        await APIs.addChatUser(phoneNumber).then((value) {
                           if (!value) {
                             Dialogs.showSnackbar(
                                 context, 'User does not Exists!');

@@ -137,7 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(height: mq.height * .03),
 
                     // user email label
-                    Text(widget.user.email,
+                    Text(widget.user.phoneNumber as String,
                         style: const TextStyle(
                             color: Colors.black54, fontSize: 16)),
 
