@@ -67,7 +67,7 @@ class _MessageCardState extends State<MessageCard> {
 
             Linkify(
             onOpen: (link) async {
-              if (!await launchUrl(Uri.parse(link.url))) {
+              if (!await launchUrl(Uri.parse(link.url), mode: LaunchMode.externalApplication)) {
                 throw Exception('Could not launch ${link.url}');
               }
             },
