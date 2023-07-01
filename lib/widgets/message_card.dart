@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
@@ -16,7 +17,7 @@ import '../models/message.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const String apiUrl = 'https://asia-south1-plant-disease-ml.cloudfunctions.net/urltest';
+const String apiUrl = 'https://asia-south1-maliciousurl.cloudfunctions.net/predict';
 // for showing single message details
 class MessageCard extends StatefulWidget {
   const MessageCard({super.key, required this.message});
@@ -81,33 +82,64 @@ class _MessageCardState extends State<MessageCard> {
                 } else if (snapshot.data != null) {
                   // API request was made and the response is available
                   final response = snapshot.data!;
-                  widget.message.value = response as String;
+                  final jsonData = jsonDecode(response.body);
+                  final prediction = jsonData['prediction'] as String;
 
+                  // Update the message in the Firebase database with the API response
+                  // (code to update the Firebase database)
+                  debugPrint(widget.message.value);
+                  if(prediction == "Safe" || prediction == "begign"){
                   return Linkify(
-                    onOpen: (link) async {
-                      if (!await launchUrl(Uri.parse(link.url),
-                          mode: LaunchMode.externalApplication)) {
-                        throw Exception('Could not launch ${link.url}');
-                      }
-                    },
-                    text: response.body,
-                    style: const TextStyle(
-                        fontSize: 15, color: Colors.black87),
-                    linkStyle: const TextStyle(color: Colors.blue),
+                      onOpen: (link) async {
+                        if (!await launchUrl(Uri.parse(link.url),
+                            mode: LaunchMode.externalApplication)) {
+                          throw Exception('Could not launch ${link.url}');
+                        }
+                      },
+                      text: widget.message.msg,
+                      style: const TextStyle(
+                          fontSize: 15, color: Colors.black87),
+                      linkStyle: const TextStyle(color: Colors.blue),
                   );
+                  }
+                  else {
+                    return Container(
+                      height: 50, // Adjust the height as needed
+                      child: Column(
+                        children: [
+                          Linkify(
+                            onOpen: (link) async {
+                              if (!await launchUrl(Uri.parse(link.url),
+                                  mode: LaunchMode.externalApplication)) {
+                                throw Exception('Could not launch ${link.url}');
+                              }
+                            },
+                            text: widget.message.msg,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.black87,
+                            ),
+                            linkStyle: const TextStyle(color: Colors.blue),
+                          ),
+                          Text(
+                            prediction, // Assuming prediction is a variable containing the prediction value
+                            style: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                 } else {
                   // API request was not made, display the original message
-                  return Linkify(
-                    onOpen: (link) async {
-                      if (!await launchUrl(Uri.parse(link.url),
-                          mode: LaunchMode.externalApplication)) {
-                        throw Exception('Could not launch ${link.url}');
-                      }
-                    },
-                    text: widget.message.msg,
+                  return Text(
+                    widget.message.msg,
                     style: const TextStyle(
-                        fontSize: 15, color: Colors.black87),
-                    linkStyle: const TextStyle(color: Colors.blue),
+                      fontSize: 15,
+                      color: Colors.black87,
+                    ),
                   );
                 }
               },
@@ -144,39 +176,29 @@ class _MessageCardState extends State<MessageCard> {
 
   bool shouldCallAPI() {
     // Add your condition here
-    if (widget.message.value.isNotEmpty) {
-      // Do not call the API if the message contains 'example'
-      return false;
-    } else {
-      // Call the API for other messages
+    if (widget.message.value.isEmpty) {
+      // Call the API if the message value is empty
       return true;
+    } else {
+      // Do not call the API if the message value is already populated
+      return false;
     }
   }
 
   Future<http.Response?> sendTextMessage(String message) async {
-    if (widget.message.value.isNotEmpty) {
-      late final Uri apiUrl;
-      apiUrl = Uri.parse('https://asia-south1-plant-disease-ml.cloudfunctions.net/urltest');
-      final response = await http.post(
-        apiUrl,
-        body: {
-          'message': message,
-        },
-      );
+    final apiUrl = Uri.parse('https://asia-south1-maliciousurl.cloudfunctions.net/predict');
+    final response = await http.post(
+      apiUrl,
+      body: {
+        'message': message,
+      },
+    );
 
-      // Save the API response in the value field of the message
-      widget.message.value = response.body;
-
-      // Update the message in the Firebase database with the API response
-      // (code to update the Firebase database)
-
-      print('API Response: ${response.body}'); // Example: Printing the response body
-
-      return response;
-    } else {
-      return null;
-    }
+    return response;
   }
+
+
+
 
 
   // our or user message
