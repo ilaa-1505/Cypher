@@ -88,7 +88,7 @@ class _MessageCardState extends State<MessageCard> {
                   // Update the message in the Firebase database with the API response
                   // (code to update the Firebase database)
                   debugPrint(widget.message.value);
-                  if(prediction == "Safe" || prediction == "begign"){
+                  if(prediction == "Safe"){
                   return Linkify(
                       onOpen: (link) async {
                         if (!await launchUrl(Uri.parse(link.url),
@@ -99,36 +99,21 @@ class _MessageCardState extends State<MessageCard> {
                       text: widget.message.msg,
                       style: const TextStyle(
                           fontSize: 15, color: Colors.black87),
-                      linkStyle: const TextStyle(color: Colors.blue),
+                      linkStyle: const TextStyle(color: Colors.green),
                   );
                   }
                   else {
-                    return Container(
-                      height: 50, // Adjust the height as needed
-                      child: Column(
-                        children: [
-                          Linkify(
-                            onOpen: (link) async {
-                              if (!await launchUrl(Uri.parse(link.url),
-                                  mode: LaunchMode.externalApplication)) {
-                                throw Exception('Could not launch ${link.url}');
-                              }
-                            },
-                            text: widget.message.msg,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: Colors.black87,
-                            ),
-                            linkStyle: const TextStyle(color: Colors.blue),
-                          ),
-                          Text(
-                            prediction, // Assuming prediction is a variable containing the prediction value
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: Colors.black87,
-                            ),
-                          ),
-                        ],
+                    return Container(// Set the desired background color
+                      child: Linkify(
+                        onOpen: (link) async {
+                          if (!await launchUrl(Uri.parse(link.url),
+                              mode: LaunchMode.externalApplication)) {
+                            throw Exception('Could not launch ${link.url}');
+                          }
+                        },
+                        text: widget.message.msg,
+                        style: const TextStyle(fontSize: 15, color: Colors.black87),
+                        linkStyle: const TextStyle(color: Colors.red),
                       ),
                     );
                   }
