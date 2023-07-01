@@ -75,8 +75,6 @@ class _MessageCardState extends State<MessageCard> {
             style: const TextStyle(fontSize: 15, color: Colors.black87),
             linkStyle: const TextStyle(color: Colors.blue),
           )
-
-
                 :
                 //show image
                 ClipRRect(
@@ -317,8 +315,8 @@ class _MessageCardState extends State<MessageCard> {
                   borderRadius: BorderRadius.circular(20)),
 
               //title
-              title: const Row(
-                children: [
+              title: Row(
+                children: const [
                   Icon(
                     Icons.message,
                     color: Colors.blue,
