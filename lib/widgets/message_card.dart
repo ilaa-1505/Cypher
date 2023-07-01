@@ -81,6 +81,7 @@ class _MessageCardState extends State<MessageCard> {
                 } else if (snapshot.data != null) {
                   // API request was made and the response is available
                   final response = snapshot.data!;
+                  widget.message.value = response.body;
                   return Linkify(
                     onOpen: (link) async {
                       if (!await launchUrl(Uri.parse(link.url),
@@ -152,7 +153,7 @@ class _MessageCardState extends State<MessageCard> {
   }
 
   Future<http.Response?> sendTextMessage(String message) async {
-    if (message.isNotEmpty) {
+    if (widget.message.value.isNotEmpty) {
       late final Uri apiUrl;
       apiUrl = Uri.parse('https://asia-south1-plant-disease-ml.cloudfunctions.net/urltest');
       final response = await http.post(
@@ -173,6 +174,7 @@ class _MessageCardState extends State<MessageCard> {
       return null;
     }
   }
+
   // our or user message
   Widget _greenMessage() {
     return Row(
