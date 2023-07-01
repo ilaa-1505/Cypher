@@ -6,6 +6,7 @@ class Message {
     required this.type,
     required this.fromId,
     required this.sent,
+    required this.value,
   });
 
   late final String toId;
@@ -14,6 +15,8 @@ class Message {
   late final String fromId;
   late final String sent;
   late final Type type;
+  late final String value;
+
 
   Message.fromJson(Map<String, dynamic> json) {
     toId = json['toId'].toString();
@@ -22,6 +25,7 @@ class Message {
     type = json['type'].toString() == Type.image.name ? Type.image : Type.text;
     fromId = json['fromId'].toString();
     sent = json['sent'].toString();
+    value = json['value'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -32,6 +36,7 @@ class Message {
     data['type'] = type.name;
     data['fromId'] = fromId;
     data['sent'] = sent;
+    data['value'] = value;
     return data;
   }
 }

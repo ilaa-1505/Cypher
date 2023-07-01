@@ -279,7 +279,9 @@ class APIs {
         read: '',
         type: type,
         fromId: user.uid,
-        sent: time);
+        sent: time,
+        value: ''
+    );
 
     final ref = firestore
         .collection('chats/${getConversationID(chatUser.id)}/messages/');
