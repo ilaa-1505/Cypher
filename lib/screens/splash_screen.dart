@@ -48,7 +48,8 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       //body
       body: Container(
-        color: Colors.lightBlueAccent, // Replace with your desired background color
+        color: const Color.fromARGB(
+            255, 143, 205, 234), // Replace with your desired background color
         child: Stack(
           children: [
             // app logo
@@ -64,10 +65,10 @@ class _SplashScreenState extends State<SplashScreen> {
               bottom: mq.height * .15,
               width: mq.width,
               child: const Text(
-                'MADE IN BHARAT 🇮🇳🇮🇳🇮🇳',
+                'MADE IN BHARAT 🇮🇳🇮🇳',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 20,
                   color: Colors.black87,
                   letterSpacing: .5,
                 ),

@@ -17,7 +17,9 @@ import '../models/message.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const String apiUrl = 'https://asia-south1-maliciousurl.cloudfunctions.net/predict';
+const String apiUrl =
+    'https://asia-south1-maliciousurl.cloudfunctions.net/predict';
+
 // for showing single message details
 class MessageCard extends StatefulWidget {
   const MessageCard({super.key, required this.message});
@@ -69,78 +71,94 @@ class _MessageCardState extends State<MessageCard> {
             ),
             child: widget.message.type == Type.text
                 ? FutureBuilder<http.Response?>(
-              future: shouldCallAPI()
-                  ? sendTextMessage(widget.message.msg)
-                  : null,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  // Display a loading indicator while waiting for the API response
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  // Handle any error that occurred during the API request
-                  return Text('Error: ${snapshot.error}');
-                } else if (snapshot.data != null) {
-                  // API request was made and the response is available
-                  final response = snapshot.data!;
-                  final jsonData = jsonDecode(response.body);
-                  final prediction = jsonData['prediction'] as String;
+                    future: shouldCallAPI()
+                        ? sendTextMessage(widget.message.msg)
+                        : null,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // Display a loading indicator while waiting for the API response
+                        return const CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        // Handle any error that occurred during the API request
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.data != null) {
+                        // API request was made and the response is available
+                        final response = snapshot.data!;
+                        final jsonData = jsonDecode(response.body);
+                        final prediction = jsonData['prediction'] as String;
 
-                  // Update the message in the Firebase database with the API response
-                  // (code to update the Firebase database)
-                  debugPrint(widget.message.value);
-                  if(prediction == "Safe"){
-                  return Linkify(
-                      onOpen: (link) async {
-                        if (!await launchUrl(Uri.parse(link.url),
-                            mode: LaunchMode.externalApplication)) {
-                          throw Exception('Could not launch ${link.url}');
+                        // Update the message in the Firebase database with the API response
+                        // (code to update the Firebase database)
+                        debugPrint(widget.message.value);
+                        if (prediction == "Safe" || prediction == "begign") {
+                          return Linkify(
+                            onOpen: (link) async {
+                              if (!await launchUrl(Uri.parse(link.url),
+                                  mode: LaunchMode.externalApplication)) {
+                                throw Exception('Could not launch ${link.url}');
+                              }
+                            },
+                            text: widget.message.msg,
+                            style: const TextStyle(
+                                fontSize: 15, color: Colors.black87),
+                            linkStyle: const TextStyle(color: Colors.blue),
+                          );
+                        } else {
+                          return Container(
+                            height: 50, // Adjust the height as needed
+                            child: Column(
+                              children: [
+                                Linkify(
+                                  onOpen: (link) async {
+                                    if (!await launchUrl(Uri.parse(link.url),
+                                        mode: LaunchMode.externalApplication)) {
+                                      throw Exception(
+                                          'Could not launch ${link.url}');
+                                    }
+                                  },
+                                  text: widget.message.msg,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black87,
+                                  ),
+                                  linkStyle:
+                                      const TextStyle(color: Colors.blue),
+                                ),
+                                Text(
+                                  prediction, // Assuming prediction is a variable containing the prediction value
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
                         }
-                      },
-                      text: widget.message.msg,
-                      style: const TextStyle(
-                          fontSize: 15, color: Colors.black87),
-                      linkStyle: const TextStyle(color: Colors.green),
-                  );
-                  }
-                  else {
-                    return Container(// Set the desired background color
-                      child: Linkify(
-                        onOpen: (link) async {
-                          if (!await launchUrl(Uri.parse(link.url),
-                              mode: LaunchMode.externalApplication)) {
-                            throw Exception('Could not launch ${link.url}');
-                          }
-                        },
-                        text: widget.message.msg,
-                        style: const TextStyle(fontSize: 15, color: Colors.black87),
-                        linkStyle: const TextStyle(color: Colors.red),
-                      ),
-                    );
-                  }
-                } else {
-                  // API request was not made, display the original message
-                  return Text(
-                    widget.message.msg,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      color: Colors.black87,
-                    ),
-                  );
-                }
-              },
-            )
+                      } else {
+                        // API request was not made, display the original message
+                        return Text(
+                          widget.message.msg,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            color: Colors.black87,
+                          ),
+                        );
+                      }
+                    },
+                  )
                 : ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: CachedNetworkImage(
-                imageUrl: widget.message.msg,
-                placeholder: (context, url) => const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                ),
-                errorWidget: (context, url, error) =>
-                const Icon(Icons.image, size: 70),
-              ),
-            ),
+                    borderRadius: BorderRadius.circular(15),
+                    child: CachedNetworkImage(
+                      imageUrl: widget.message.msg,
+                      placeholder: (context, url) => const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.image, size: 70),
+                    ),
+                  ),
           ),
         ),
 
@@ -171,7 +189,8 @@ class _MessageCardState extends State<MessageCard> {
   }
 
   Future<http.Response?> sendTextMessage(String message) async {
-    final apiUrl = Uri.parse('https://asia-south1-maliciousurl.cloudfunctions.net/predict');
+    final apiUrl = Uri.parse(
+        'https://asia-south1-maliciousurl.cloudfunctions.net/predict');
     final response = await http.post(
       apiUrl,
       body: {
@@ -181,10 +200,6 @@ class _MessageCardState extends State<MessageCard> {
 
     return response;
   }
-
-
-
-
 
   // our or user message
   Widget _greenMessage() {
@@ -232,16 +247,17 @@ class _MessageCardState extends State<MessageCard> {
             child: widget.message.type == Type.text
                 ?
                 //show text
-            Linkify(
-              onOpen: (link) async {
-                if (!await launchUrl(Uri.parse(link.url), mode: LaunchMode.externalApplication)) {
-                  throw Exception('Could not launch ${link.url}');
-                }
-              },
-              text: widget.message.msg,
-              style: const TextStyle(fontSize: 15, color: Colors.black87),
-              linkStyle: const TextStyle(color: Colors.blue),
-            )
+                Linkify(
+                    onOpen: (link) async {
+                      if (!await launchUrl(Uri.parse(link.url),
+                          mode: LaunchMode.externalApplication)) {
+                        throw Exception('Could not launch ${link.url}');
+                      }
+                    },
+                    text: widget.message.msg,
+                    style: const TextStyle(fontSize: 15, color: Colors.black87),
+                    linkStyle: const TextStyle(color: Colors.blue),
+                  )
                 :
                 //show image
                 ClipRRect(

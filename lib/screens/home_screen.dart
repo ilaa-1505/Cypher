@@ -74,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           //app bar
           appBar: AppBar(
+            backgroundColor: Color.fromARGB(255, 160, 204, 240),
             leading: const Icon(CupertinoIcons.home),
             title: _isSearching
                 ? TextField(
@@ -221,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Icon(
                     Icons.person_add,
-                    color: Colors.blue,
+                    color: Color.fromARGB(255, 74, 167, 243),
                     size: 28,
                   ),
                   Text('  Add User')
@@ -234,7 +235,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 onChanged: (value) => phoneNumber = "+91$value",
                 decoration: InputDecoration(
                     hintText: 'phone number',
-                    prefixIcon: const Icon(Icons.phone, color: Colors.blue),
+                    prefixIcon: const Icon(Icons.phone,
+                        color: Color.fromARGB(255, 74, 167, 243)),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15))),
               ),
@@ -248,7 +250,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.pop(context);
                     },
                     child: const Text('Cancel',
-                        style: TextStyle(color: Colors.blue, fontSize: 16))),
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 74, 167, 243),
+                            fontSize: 16))),
 
                 //add button
                 MaterialButton(
@@ -266,7 +270,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     child: const Text(
                       'Add',
-                      style: TextStyle(color: Colors.blue, fontSize: 16),
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 74, 167, 243),
+                          fontSize: 16),
                     ))
               ],
             ));

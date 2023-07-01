@@ -94,7 +94,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           } else {
                             return Center(
                               child: Text(
-                                'Namaste 🙏🙏',
+                                'Namaste 🙏',
                                 style: GoogleFonts.poppins(fontSize: 15),
                               ),
                             );
@@ -233,7 +233,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         setState(() => _showEmoji = !_showEmoji);
                       },
                       icon: const Icon(Icons.emoji_emotions,
-                          color: Colors.blueAccent, size: 25)),
+                          color: Color.fromARGB(255, 74, 167, 243), size: 25)),
 
                   Expanded(
                       child: TextField(
@@ -246,7 +246,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     decoration: InputDecoration(
                         hintText: 'Type Something...',
                         hintStyle: GoogleFonts.poppins(
-                            color: Colors.blueAccent, fontSize: 15),
+                            color: Color.fromARGB(255, 74, 167, 243),
+                            fontSize: 15),
                         border: InputBorder.none),
                   )),
 
@@ -268,7 +269,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         }
                       },
                       icon: const Icon(Icons.image,
-                          color: Colors.blueAccent, size: 26)),
+                          color: Color.fromARGB(255, 74, 167, 243), size: 26)),
 
                   //take image from camera button
                   IconButton(
@@ -288,7 +289,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         }
                       },
                       icon: const Icon(Icons.camera_alt_rounded,
-                          color: Colors.blueAccent, size: 26)),
+                          color: Color.fromARGB(255, 74, 167, 243), size: 26)),
 
                   //adding some space
                   SizedBox(width: mq.width * .02),
@@ -317,7 +318,7 @@ class _ChatScreenState extends State<ChatScreen> {
             padding:
                 const EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 10),
             shape: const CircleBorder(),
-            color: Colors.green,
+            color: Color.fromARGB(255, 32, 120, 192),
             child: const Icon(Icons.send, color: Colors.white, size: 28),
           )
         ],
