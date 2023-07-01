@@ -73,7 +73,7 @@ class _MessageCardState extends State<MessageCard> {
             },
             text: widget.message.msg,
             style: const TextStyle(fontSize: 15, color: Colors.black87),
-            linkStyle: const TextStyle(color: Colors.red),
+            linkStyle: const TextStyle(color: Colors.blue),
           )
 
 
@@ -153,10 +153,16 @@ class _MessageCardState extends State<MessageCard> {
             child: widget.message.type == Type.text
                 ?
                 //show text
-                Text(
-                    widget.message.msg,
-                    style: const TextStyle(fontSize: 15, color: Colors.black87),
-                  )
+            Linkify(
+              onOpen: (link) async {
+                if (!await launchUrl(Uri.parse(link.url), mode: LaunchMode.externalApplication)) {
+                  throw Exception('Could not launch ${link.url}');
+                }
+              },
+              text: widget.message.msg,
+              style: const TextStyle(fontSize: 15, color: Colors.black87),
+              linkStyle: const TextStyle(color: Colors.blue),
+            )
                 :
                 //show image
                 ClipRRect(
@@ -311,8 +317,8 @@ class _MessageCardState extends State<MessageCard> {
                   borderRadius: BorderRadius.circular(20)),
 
               //title
-              title: Row(
-                children: const [
+              title: const Row(
+                children: [
                   Icon(
                     Icons.message,
                     color: Colors.blue,
