@@ -45,101 +45,49 @@ class _MessageCardState extends State<MessageCard> {
       APIs.updateMessageReadStatus(widget.message);
     }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // message content
-        Flexible(
-          child: Container(
-            padding: EdgeInsets.all(widget.message.type == Type.image
-                ? mq.width * .03
-                : mq.width * .04),
-            margin: EdgeInsets.symmetric(
-                horizontal: mq.width * .04, vertical: mq.height * .01),
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 221, 245, 255),
-              border: Border.all(color: Colors.lightBlue),
-              // making borders curved
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-            ),
-            child: widget.message.type == Type.text
-                ? FutureBuilder<http.Response?>(
-              future: shouldCallAPI()
-                  ? sendTextMessage(widget.message.msg)
-                  : null,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  // Display a loading indicator while waiting for the API response
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  // Handle any error that occurred during the API request
-                  return Text('Error: ${snapshot.error}');
-                } else if (snapshot.data != null) {
-                  // API request was made and the response is available
-                  final response = snapshot.data!;
-                  widget.message.value = response.body;
-                  return Linkify(
-                    onOpen: (link) async {
-                      if (!await launchUrl(Uri.parse(link.url),
-                          mode: LaunchMode.externalApplication)) {
-                        throw Exception('Could not launch ${link.url}');
-                      }
-                    },
-                    text: response.body,
-                    style: const TextStyle(
-                        fontSize: 15, color: Colors.black87),
-                    linkStyle: const TextStyle(color: Colors.blue),
-                  );
-                } else {
-                  // API request was not made, display the original message
-                  return Linkify(
-                    onOpen: (link) async {
-                      if (!await launchUrl(Uri.parse(link.url),
-                          mode: LaunchMode.externalApplication)) {
-                        throw Exception('Could not launch ${link.url}');
-                      }
-                    },
-                    text: widget.message.msg,
-                    style: const TextStyle(
-                        fontSize: 15, color: Colors.black87),
-                    linkStyle: const TextStyle(color: Colors.blue),
-                  );
-                }
-              },
-            )
-                : ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: CachedNetworkImage(
-                imageUrl: widget.message.msg,
-                placeholder: (context, url) => const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                ),
-                errorWidget: (context, url, error) =>
-                const Icon(Icons.image, size: 70),
-              ),
-            ),
-          ),
-        ),
+    return FutureBuilder<http.Response?>(
+      future: shouldCallAPI() ? sendTextMessage(widget.message.msg) : null,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Display a loading indicator while waiting for the API response
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          // Handle any error that occurred during the API request
+          return Text('Error: ${snapshot.error}');
+        } else if (snapshot.data != null) {
+          // API request was made and the response is available
+          final response = snapshot.data!;
 
-        // message time
-        Padding(
-          padding: EdgeInsets.only(right: mq.width * .04),
-          child: Text(
-            MyDateUtil.getFormattedTime(
-              context: context,
-              time: widget.message.sent,
-            ),
-            style: const TextStyle(fontSize: 13, color: Colors.black54),
-          ),
-        ),
-      ],
+          // Save the API response in the value field of the message
+          widget.message.value = response.body;
+
+          return Linkify(
+            onOpen: (link) async {
+              if (!await launchUrl(Uri.parse(link.url), mode: LaunchMode.externalApplication)) {
+                throw Exception('Could not launch ${link.url}');
+              }
+            },
+            text: response.body,
+            style: const TextStyle(fontSize: 15, color: Colors.black87),
+            linkStyle: const TextStyle(color: Colors.blue),
+          );
+        } else {
+          // API request was not made, display the original message
+          return Linkify(
+            onOpen: (link) async {
+              if (!await launchUrl(Uri.parse(link.url), mode: LaunchMode.externalApplication)) {
+                throw Exception('Could not launch ${link.url}');
+              }
+            },
+            text: widget.message.msg,
+            style: const TextStyle(fontSize: 15, color: Colors.black87),
+            linkStyle: const TextStyle(color: Colors.blue),
+          );
+        }
+      },
     );
   }
+
 
   bool shouldCallAPI() {
     // Add your condition here
@@ -154,8 +102,7 @@ class _MessageCardState extends State<MessageCard> {
 
   Future<http.Response?> sendTextMessage(String message) async {
     if (widget.message.value.isNotEmpty) {
-      late final Uri apiUrl;
-      apiUrl = Uri.parse('https://asia-south1-plant-disease-ml.cloudfunctions.net/urltest');
+      final Uri apiUrl = Uri.parse('https://asia-south1-plant-disease-ml.cloudfunctions.net/urltest');
       final response = await http.post(
         apiUrl,
         body: {
@@ -164,7 +111,9 @@ class _MessageCardState extends State<MessageCard> {
       );
 
       // Save the API response in the value field of the message
-      widget.message.value = response.body;
+      setState(() {
+        widget.message.value = response.body;
+      });
 
       // Update the message in the Firebase database with the API response
       // (code to update the Firebase database)
