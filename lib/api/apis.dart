@@ -26,7 +26,7 @@ class APIs {
       id: user.uid,
       name: user.displayName.toString(),
       phoneNumber: user.phoneNumber.toString(),
-      about: "Hey, I'm using We Chat!",
+      about: "Hey, I'm using Cypher!",
       image: user.photoURL.toString(),
       createdAt: '',
       isOnline: false,
