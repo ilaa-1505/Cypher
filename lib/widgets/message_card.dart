@@ -90,7 +90,7 @@ class _MessageCardState extends State<MessageCard> {
                         // Update the message in the Firebase database with the API response
                         // (code to update the Firebase database)
                         debugPrint(widget.message.value);
-                        if (prediction == "Safe" || prediction == "begign") {
+                        if (prediction == "no link") {
                           return Linkify(
                             onOpen: (link) async {
                               if (!await launchUrl(Uri.parse(link.url),
@@ -100,15 +100,51 @@ class _MessageCardState extends State<MessageCard> {
                             },
                             text: widget.message.msg,
                             style: const TextStyle(
-                                fontSize: 15, color: Colors.black87),
-                            linkStyle: const TextStyle(color: Colors.blue),
+                                fontSize: 18, color: Colors.black87),
+                            linkStyle: const TextStyle(color: Colors.green),
+                          );
+                        } else if (prediction == "Safe" ||
+                            prediction == "begign") {
+                          return Linkify(
+                            onOpen: (link) async {
+                              if (!await launchUrl(Uri.parse(link.url),
+                                  mode: LaunchMode.externalApplication)) {
+                                throw Exception('Could not launch ${link.url}');
+                              }
+                            },
+                            text: widget.message.msg,
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.black87),
+                            linkStyle: const TextStyle(color: Colors.green),
                           );
                         } else {
-                          return Container(
-                            height: 50, // Adjust the height as needed
-                            child: Column(
-                              children: [
-                                Linkify(
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red[300],
+                                  borderRadius: BorderRadius.circular(
+                                      12), // Set the desired background color for the warning message
+                                ),
+                                child: ClipRRect(
+                                  // Set the border radius
+                                  child: Container(
+                                    padding: const EdgeInsets.all(
+                                        8.0), // Set padding for the warning message
+                                    child: Text(
+                                      'Suspected Scam!!! '
+                                      'Proceed with CAUTION!!',
+                                      style: const TextStyle(
+                                          fontSize: 16, color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(
+                                    8.0), // Set padding for the Linkify widget
+                                child: Linkify(
                                   onOpen: (link) async {
                                     if (!await launchUrl(Uri.parse(link.url),
                                         mode: LaunchMode.externalApplication)) {
@@ -118,21 +154,11 @@ class _MessageCardState extends State<MessageCard> {
                                   },
                                   text: widget.message.msg,
                                   style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black87,
-                                  ),
-                                  linkStyle:
-                                      const TextStyle(color: Colors.blue),
+                                      fontSize: 18, color: Colors.black87),
+                                  linkStyle: const TextStyle(color: Colors.red),
                                 ),
-                                Text(
-                                  prediction, // Assuming prediction is a variable containing the prediction value
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           );
                         }
                       } else {
