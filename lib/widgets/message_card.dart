@@ -281,7 +281,7 @@ class _MessageCardState extends State<MessageCard> {
                       }
                     },
                     text: widget.message.msg,
-                    style: const TextStyle(fontSize: 15, color: Colors.black87),
+                    style: const TextStyle(fontSize: 18, color: Colors.black87),
                     linkStyle: const TextStyle(color: Colors.blue),
                   )
                 :
