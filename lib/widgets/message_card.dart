@@ -88,7 +88,7 @@ class _MessageCardState extends State<MessageCard> {
                   // Update the message in the Firebase database with the API response
                   // (code to update the Firebase database)
                   debugPrint(widget.message.value);
-                  if(prediction == "nolinks"){
+                  if(prediction == "no link"){
                   return Linkify(
                       onOpen: (link) async {
                         if (!await launchUrl(Uri.parse(link.url),
@@ -98,7 +98,7 @@ class _MessageCardState extends State<MessageCard> {
                       },
                       text: widget.message.msg,
                       style: const TextStyle(
-                          fontSize: 15, color: Colors.black87),
+                          fontSize: 18, color: Colors.black87),
                       linkStyle: const TextStyle(color: Colors.green),
                   );
                   }
@@ -151,7 +151,9 @@ class _MessageCardState extends State<MessageCard> {
                               }
                             },
                             text: widget.message.msg,
-                            style: const TextStyle(fontSize: 18, color: Colors.black87),
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.black87),
+                            linkStyle: const TextStyle(color: Colors.red),
                           ),
                         ),
                       ],
